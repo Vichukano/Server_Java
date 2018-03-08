@@ -1,8 +1,12 @@
-package serversocket;
+package serversocket.client;
+
+import serversocket.client.Client;
+import serversocket.client.Constants;
 
 import javax.swing.*;
 import java.awt.*;
 
+// Сделать текст ареа неизменяемой.
 public class Interface {
     public static JFrame frame;
     public static JTextField textField;
@@ -20,7 +24,7 @@ public class Interface {
         sendBtn.setToolTipText("Click to send message");
         sendBtn.addActionListener(e -> {
             try {
-                Client.sendBtn_Handler();
+                sendBtn_Click();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -34,7 +38,19 @@ public class Interface {
         frame.getContentPane().add(BorderLayout.NORTH, textArea);
         frame.getContentPane().add(BorderLayout.CENTER, textField);
         frame.getContentPane().add(BorderLayout.EAST, sendBtn);
+        textArea.setEditable(false);
         frame.setVisible(true);
+    }
+
+    public static void sendBtn_Click(){
+        String msg = textField.getText();
+        if (!msg.isEmpty()){
+            textField.setText("");
+            Client.sendMessage(msg);
+        }
+        else {
+            msg = textField.getText();
+        }
     }
 
 
